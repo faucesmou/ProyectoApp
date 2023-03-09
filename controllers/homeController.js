@@ -6,7 +6,8 @@ module.exports = {
     res.render('index', { title: 'Predicción CreaTech' });
   },
   postIndex : (req, res) => {
-    const { year, mileage, city, state, make_number, model_number } = req.body;
+    const {year, mileage, city, state, make_number, model_number} = req.body;
+    console.log(req.body);
     const data = {
       year,
       mileage,

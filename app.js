@@ -4,34 +4,36 @@ const path = require('path');
 const axios = require('axios');
 const { exec } = require('child_process');
 const fs = require('fs');
+const bodyParser = require('body-parser');
+
+// Definir variables constantes
+const endpoint_Id = "7604503892675526656";
+const proyect_Id = "buoyant-road-376019";
+const rutaArchivoJson = './data.json';
 
 // Seteando las rutas
 const homeRouter = require("./routes/home");
+
+app.use('/', homeRouter);
+console.log("hasta acá lee");
 
 // Seteando motor de vistas
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Configurando middleware para parsear body de requests
-app.use(express.urlencoded({ extended: true }));
+/* app.use(express.urlencoded({ extended: true })); */
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Configurando middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-const endpoint_Id = "7604503892675526656";
-const proyect_Id = "buoyant-road-376019";
-const rutaArchivoJson = './data.json';
 
-// Utilizamos la ruta "/" para construir los endpoints, pero cuando solo utilizamos GET, estamos limitados a una única ruta por GET en específico
-app.use('/', homeRouter);
-
-app.post('/api/prediction', (req, res) => {
-  const filePath = req.body.filePath;
-  const jsonData = fs.readFileSync(filePath, 'utf8');
-  console.log(jsonData);
-  const jsonRequest = JSON.parse(jsonData);
-  console.log(jsonRequest);
+app.post('/formulario', (req, res) => {
+  let filePath = req.body.filePath;
+  let jsonData = fs.readFileSync(filePath, 'utf8');
+  let jsonRequest = JSON.parse(jsonData);
   exec('gcloud auth print-access-token', (err, stdout, stderr) => {
     if (err) {
       console.error(err);
@@ -52,7 +54,16 @@ app.post('/api/prediction', (req, res) => {
       })
       .catch(error => {
         console.error(error);
-        return res.status(500).send('¡Hubo un error al procesar los datos!');
+        //manejo de errores
+        if (error.response) {
+          return res.status(error.response.status).send(error.response.data);
+        } else if (error.request) {
+          // No se pudo obtener una respuesta del servidor
+          return res.status(500).send('¡Hubo un error al procesar la solicitud!');
+        } else {
+          // Algo sucedió durante la configuración de la solicitud que provocó el error
+          return res.status(500).send('¡Hubo un error al procesar los datos!');
+        }
       });
   });
 });
