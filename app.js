@@ -25,12 +25,6 @@ const rutaArchivoJson = './data.json';
 //estamos utilizando la ruta "/" Para construir los endpoints, pero cuando solo utilizamos get, estamos   limitados a una unica ruta por get en especifico
 app.use('/', homeRouter);
 
-//ESTE APP.GET ES PARTE DE LA PRUEBA N°50
-app.get('/formulario', (req, res) => {
-  res.render('formulario', { title: 'Formulario de Predicción' });
-});
-//LLEGA HASTA ACÁ
-
 
 
 app.post('/api/prediction', (req, res) => {
