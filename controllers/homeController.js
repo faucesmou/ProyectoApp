@@ -67,6 +67,9 @@ module.exports = {
 
   }
 };
+
+
+//------------------------------------------------------------------------------------->
 //HASTA ACÁ LLEGA EL CÓDIGO ORIGINAL
 
 // depurando el proyecto: generamos una función directamente desde el objeto literal getIndex y post Index, en vez de haber instanciado primero el objeto vacío
@@ -96,3 +99,4 @@ module.exports = {
 };*/
 /* había puesto esta línea de código en la línea 9: return res.send(req.body); */
 
+//______________
