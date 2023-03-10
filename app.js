@@ -5,6 +5,10 @@ const axios = require('axios');
 const { exec } = require('child_process');
 const fs = require('fs');
 
+const endpoint_Id = "157801908818411520";
+const proyect_Id = "buoyant-road-376019";
+const rutaArchivoJson = './data.json';
+
 //seteando las rutas
 const homeRouter = require("./routes/home");
 
@@ -17,17 +21,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const endpoint_Id = "309919882530258944";
-const proyect_Id = "buoyant-road-376019";
-const rutaArchivoJson = './data.json';
+
 
 
 //estamos utilizando la ruta "/" Para construir los endpoints, pero cuando solo utilizamos get, estamos   limitados a una unica ruta por get en especifico
 app.use('/', homeRouter);
 
 
-
-app.post('/api/prediction', (req, res) => {
+/*
+app.post('/formulario', (req, res) => {
   const filePath = req.body.filePath;
   const jsonData = fs.readFileSync(filePath, 'utf8');
   console.log(jsonData);
@@ -47,7 +49,7 @@ app.post('/api/prediction', (req, res) => {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json'
     };
-    
+
     axios.post(url, jsonRequest, { headers })
       .then(response => {
         console.log(response.data);
@@ -58,7 +60,8 @@ app.post('/api/prediction', (req, res) => {
         res.status(500).send('¡Hubo un error al procesar los datos!');
       });
   });
-}); 
+}); //fin del app.post()
+*/
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');
