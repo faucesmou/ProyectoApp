@@ -1,6 +1,9 @@
+//EMPIEZA EL CÓDIGO ORIGINAL
 const fs = require('fs');
-
-const datosJson = require("../data.json")
+const axios = require('axios');
+const { exec } = require('child_process');
+const endpoint_Id = "157801908818411520";
+const proyect_Id = "buoyant-road-376019";
 
 module.exports = {
   getIndex: (req, res) => {
@@ -9,37 +12,58 @@ module.exports = {
   },
   postIndex: (req, res) => {
     const { year, mileage, city, state, make_number, model_number } = req.body;
-    console.log(req.body);
-    //cambio el estilo usando el modelo que me mostró cristian para guardar la data pero el problema persiste:
-    let mensaje1 = "formulario cargado con éxito"
-    console.log(mensaje1);
-    console.log(year);
-    let data = {
-      year: year,
-      mileage: mileage,
-      city: city,
-      state: state,
-      make_number: make_number,
-      model_number: model_number,
+    console.log('filepath: ', req.body.filePath)
+    const data = {
+      year,
+      mileage,
+      city,
+      state,
+      make_number,
+      model_number
     };
-    datosJson.push(data);
-    let datosFinal = JSON.stringify(datosJson);
-    console.log("estos son los datosFinal json" + datosFinal);
 
     try {
-      fs.writeFileSync('data.json', datosFinal);
+      fs.writeFileSync('data.json', JSON.stringify(data));
       console.log('Data written to file');
-      res.redirect('/');
+      const jsonData = fs.readFileSync('data.json', 'utf8');
+      const jsonRequest = JSON.parse(jsonData);
+      console.log(jsonRequest);
+
+      exec('gcloud auth print-access-token', (err, stdout, stderr) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send('¡Hubo un error al procesar los datos!');
+        }
+        // Capturamos el token de autenticación
+        const accessToken = stdout.trim();
+
+        const url = `https://southamerica-east1-aiplatform.googleapis.com/v1/projects/${proyect_Id}/locations/southamerica-east1/endpoints/${endpoint_Id}:predict`;
+        const headers = {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json'
+        };
+
+
+
+        axios.post(url, jsonRequest, { headers })
+          .then(response => {
+            console.log(response.data);
+            res.send(response.data);
+          })
+          .catch(error => {
+            console.error(error);
+            res.status(500).send('¡Hubo un error al procesar los datos!');
+          });
+      });
     } catch (error) {
       console.error(error);
       res.status(500).send('Error al guardar los datos');
       return;
     }
+
+
+    /* res.redirect('/');  */
+    // res.send(req.body);
+
   }
-}
-
-
-
-
-
-
+};
