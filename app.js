@@ -5,9 +5,9 @@ const axios = require('axios');
 const { exec } = require('child_process');
 const fs = require('fs');
 
-const endpoint_Id = "157801908818411520";
+/* const endpoint_Id = "157801908818411520";
 const proyect_Id = "buoyant-road-376019";
-const rutaArchivoJson = './data.json';
+const rutaArchivoJson = './data.json'; */
 
 //seteando las rutas
 const homeRouter = require("./routes/home");
