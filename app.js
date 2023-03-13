@@ -5,10 +5,6 @@ const axios = require('axios');
 const { exec } = require('child_process');
 const fs = require('fs');
 
-/* const endpoint_Id = "157801908818411520";
-const proyect_Id = "buoyant-road-376019";
-const rutaArchivoJson = './data.json'; */
-
 // Seteando las rutas
 const homeRouter = require("./routes/home");
 
@@ -28,12 +24,4 @@ app.listen(3000, () => {
   console.log('Server started on port 3000');
 });
 
-/*
-app.post('/formulario', (req, res) => {
-  const filePath = req.body.filePath;
-  const jsonData = fs.readFileSync(filePath, 'utf8');
-  console.log(jsonData);
-  const jsonRequest = JSON.parse(jsonData);
-  console.log(jsonRequest);
 
-*/
