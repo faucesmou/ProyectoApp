@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Configurando middleware para parsear body de requests
-/app.use(express.urlencoded({ extended: true })); 
+app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
 // Configurando middleware para servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));

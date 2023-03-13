@@ -1,3 +1,12 @@
+/* curl \
+-X POST \
+-H "Authorization: Bearer $(gcloud auth print-access-token)" \
+-H "Content-Type: application/json" \
+https://southamerica-east1-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/southamerica-east1/endpoints/${ENDPOINT_ID}:predict \
+-d "@${INPUT_DATA_FILE}"
+ */
+
+
 /* Código inicial 07/03/:
  "const express = require('express');
 const app = express();
