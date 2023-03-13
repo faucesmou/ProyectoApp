@@ -21,7 +21,7 @@ module.exports = {
       make_number,
       model_number
     };
-//se escribe el archivo data.json a partir del submit del formulario del puerto 3000:
+    //se escribe el archivo data.json a partir del submit del formulario del puerto 3000:
     try {
       fs.writeFileSync('data.json', JSON.stringify(data));
       console.log('Data written to file');
@@ -37,7 +37,7 @@ module.exports = {
       /* jsonRequest = JSON.parse(jsonData); 
       console.log(jsonRequest);*/
 
-// comienza la solicitud a google cloud: 
+      // comienza la solicitud a google cloud: 
       exec('gcloud auth print-access-token', (err, stdout, stderr) => {
         if (err) {
           console.log("este es el err.message:" + err.message);
@@ -62,7 +62,7 @@ module.exports = {
             res.status(500).json({ error: 'Ha ocurrido el segundo error en la petición' });
           });
       });
-      
+
     } catch (error) {
       console.log('Se ha producido el tercer error en la petición:', error.message);
       res.status(500).json({ error: 'Ha ocurrido el tercer error en la petición' });
@@ -73,3 +73,4 @@ module.exports = {
   }
 };
 //------------------------------------------------------------------------------------->
+
