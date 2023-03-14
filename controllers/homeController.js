@@ -5,7 +5,7 @@ const { google } = require('googleapis');
 /* const rutaArchivoJson = '../data3.json';
 const jsonRequest = require(rutaArchivoJson); */
 
-const endpoint_Id = "1723928679236501504";
+const endpoint_Id = "8571651912653340672";
 const proyect_Id = "buoyant-road-376019";
 
 /* const readFileAsync = promisify(fs.readFile);
@@ -54,17 +54,25 @@ module.exports = {
       const response = await axios.post(url, data, { headers });
       console.log("Este es el response.data: " + response.data);
       console.log("este es el resultado 1: " + JSON.stringify(response.data));
-      res.send(response.data);
+      let resultado = response.data;
+      module.exports.mostrarResultado(req, res, resultado);
 
-     /*  await unlinkAsync('data.json');
-       console.log("Archivo data.json eliminado."); 
-      console.log("este es el resultado 2:" + JSON.stringify(response.data));
-      res.send(response.data); */
+      /* res.send(response.data); */
+
+//acá estaba el await unlinkAsync: (lo dejo por si llego a necesitar )
 
     } catch (error) {
       console.error('Se ha producido el tercer error en la petición:', error.message);
       res.status(500).json({ error: 'Ha ocurrido un error al realizar la solicitud a la API de Google Cloud' });
     }
+  },
+  mostrarResultado:  function(req, res, response) {
+    res.render('result', { resultado: response});
   }
 };
+
+     /*  await unlinkAsync('data.json');
+       console.log("Archivo data.json eliminado."); 
+      console.log("este es el resultado 2:" + JSON.stringify(response.data));
+      res.send(response.data); */
 

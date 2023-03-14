@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Resultado de búsqueda</title>
+    <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body>
-    <h1>Resultado de la Predicción</h1>
-    <pre><%= JSON.stringify(result, null, 2) %></pre>
-    <a href="/">Volver al inicio</a>
+    <table>
+      <h1>Resultado de la Predicción</h1>
+      <tr>
+        <th>Valor:</th>
+        <td><%= resultado.predictions[0].value %></td>
+      </tr>
+      <tr>
+        <th>Límite superior:</th>
+        <td><%= resultado.predictions[0].upper_bound %></td>
+      </tr>
+      <tr>
+        <th>Límite inferior:</th>
+        <td><%= resultado.predictions[0].lower_bound %></td>
+      </tr>
+      <tr>
+        <th>Modelo desplegado:</th>
+        <td><%= resultado.deployedModelId %></td>
+      </tr>
+      <tr>
+        <th>Modelo:</th>
+        <td><%= resultado.model %></td>
+      </tr>
+      <tr>
+        <th>Nombre del modelo:</th>
+        <td><%= resultado.modelDisplayName %></td>
+      </tr>
+      <tr>
+        <th>Id de la versión del modelo:</th>
+        <td><%= resultado.modelVersionId %></td>
+      </tr>
+    </table>
+    <button onclick = "location.href='http://localhost:3000/'" >Realizar otra Predicción</button>
   </body>
 </html>
